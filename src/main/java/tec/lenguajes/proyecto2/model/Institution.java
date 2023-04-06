@@ -14,6 +14,8 @@ import lombok.Setter;
 @Entity
 public class Institution extends Owner{
 
+    @Id
+    private Integer id;
     private String webSite;
 
     public Institution(Integer id, String name, String country, String phone, String email, String webSite) {

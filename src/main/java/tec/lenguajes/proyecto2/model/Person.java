@@ -14,8 +14,8 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table
 public class Person extends Owner implements Serializable {
+
     private String lastName;
     @OneToMany(mappedBy = "autor")
     private List<Image> images;
