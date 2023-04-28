@@ -1,11 +1,23 @@
 package tec.lenguajes.proyecto2.model.Taxones;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.NoArgsConstructor;
 import tec.lenguajes.proyecto2.Exception.AncestorException;
 import tec.lenguajes.proyecto2.Exception.NameException;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Especie extends Taxon{
+@Entity
+//@NoArgsConstructor
+public class Especie extends Taxon implements Serializable {
+
+    public Especie() {
+        super();
+    }
 
     // ubicación del espécimen en los estantes de la colección.
     private String specimen_location_rack;

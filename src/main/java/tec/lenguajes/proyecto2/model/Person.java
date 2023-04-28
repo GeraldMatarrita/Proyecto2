@@ -1,8 +1,6 @@
 package tec.lenguajes.proyecto2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,16 +11,21 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Person extends Owner implements Serializable {
 
     private String lastName;
-    @OneToMany(mappedBy = "autor")
+
+    public Person() {
+        super();
+    }
+
+    @OneToMany(mappedBy = "author")
     private List<Image> images;
 
 
     public Person(Integer id, String name, String lastName, String country, String phone, String email) {
-        super(id, name, country, phone, email);
+        super(name, country, phone, email);
         this.lastName = lastName;
     }
 }

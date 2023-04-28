@@ -1,11 +1,23 @@
 package tec.lenguajes.proyecto2.model.Taxones;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.NoArgsConstructor;
 import tec.lenguajes.proyecto2.Exception.AncestorException;
 import tec.lenguajes.proyecto2.Exception.NameException;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Genero extends Taxon {
+@Entity
+//@NoArgsConstructor
+public class Genero extends Taxon implements Serializable {
+
+    public Genero() {
+        super();
+    }
 
     // Constructor con toda la información del taxon, heredado del padre.
     public Genero(String scientific_name, String author, Date publication_year, Taxon taxon_ancestor_id) throws AncestorException, NameException {

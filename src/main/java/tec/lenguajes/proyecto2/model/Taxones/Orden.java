@@ -1,13 +1,23 @@
 package tec.lenguajes.proyecto2.model.Taxones;
 
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import tec.lenguajes.proyecto2.Exception.AncestorException;
 import tec.lenguajes.proyecto2.Exception.NameException;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Orden extends Taxon {
+@Entity
+//@NoArgsConstructor
+public class Orden extends Taxon implements Serializable {
+
+    public Orden() {
+        super();
+    }
 
     // Método de colecta (Atributo propio de Orden). Se utiliza un Enum para limitar las posibles asignaciones.
+    @Enumerated(EnumType.STRING)
     private CollectingMethod collecting_method;
 
     // Constructor con toda la información del taxon, heredado del padre. Además, se asigna el atributo propio.

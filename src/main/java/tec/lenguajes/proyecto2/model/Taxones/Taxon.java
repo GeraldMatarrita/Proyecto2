@@ -10,11 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Taxon {
-    //codigo
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     //nombre
     private String scientific_name;
     //autor
@@ -22,10 +23,9 @@ public abstract class Taxon {
     //año de publicación del taxon
     private Date publication_year;
     //ancestro
-    @Transient
-    private Taxon taxon_ancestor_id;
+    @ManyToOne
+    private Taxon taxon_ancestor;
     //Variable para asignar un id de forma automática
-    private Integer count = 0;
 
     @OneToMany(mappedBy = "taxon")
     private List<Image> images;
@@ -44,8 +44,7 @@ public abstract class Taxon {
     public Taxon(String scientific_name, String author, Date publication_year, Taxon taxon_ancestor_id) throws AncestorException, NameException {
         if (suffixVerification(scientific_name)) {
             if (ancestorVerification(taxon_ancestor_id)) {
-                this.taxon_ancestor_id = taxon_ancestor_id;
-                this.id = ++count;
+                this.taxon_ancestor = taxon_ancestor_id;
                 this.scientific_name = scientific_name;
                 updateName();
                 this.author = author;
@@ -64,20 +63,10 @@ public abstract class Taxon {
         de la letra inicial en caso de ser necesario.
      */
     public Taxon(String scientific_name, String author, Date publication_year) {
-        this.id = ++count;
         this.scientific_name = scientific_name;
         updateName();
         this.author = author;
         this.publication_year = publication_year;
-    }
-
-    // Get y Set del ID
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     // Get y Set del nombre
@@ -119,18 +108,18 @@ public abstract class Taxon {
     }
 
     // Get y Set del ancestro.
-    public Taxon getTaxon_ancestor_id() {
-        return taxon_ancestor_id;
+    public Taxon getTaxon_ancestor() {
+        return taxon_ancestor;
     }
     /*
         Antes de modificar la instancia se verifica que el ancestro que se quiere asignar es el correcto. En este caso
         no es necesario lanzar una excepción dado que solamente no se modifica la instancia que ya existe.
     */
-    public void setTaxon_ancestor_id(Taxon taxon_ancestor_id) {
-        if (ancestorVerification(taxon_ancestor_id)) {
-            this.taxon_ancestor_id = taxon_ancestor_id;
+    public void setTaxon_ancestor(Taxon taxon_ancestor) {
+        if (ancestorVerification(taxon_ancestor)) {
+            this.taxon_ancestor = taxon_ancestor;
         } else {
-            System.err.println("El ancestro " + taxon_ancestor_id.getClass().getName() + " no es válido para " + this.getClass().getName());
+            System.err.println("El ancestro " + taxon_ancestor.getClass().getName() + " no es válido para " + this.getClass().getName());
         }
     }
 

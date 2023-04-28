@@ -1,8 +1,21 @@
 package tec.lenguajes.proyecto2.model.Taxones;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Reino extends Taxon {
+@Entity
+//@NoArgsConstructor
+public class Reino extends Taxon implements Serializable {
+
+    public Reino() {
+        super();
+    }
 
     // Constructor con toda la información del taxon, heredado del padre.
     public Reino(String scientific_name, String author, Date publication_year) {

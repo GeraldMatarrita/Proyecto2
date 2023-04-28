@@ -1,18 +1,19 @@
 package tec.lenguajes.proyecto2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
-public class Owner {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Owner {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -21,8 +22,10 @@ public class Owner {
     private String phone;
     private String email;
 
-    public Owner(Integer id, String name, String country, String phone, String email) {
-        this.id = id;
+    @OneToMany(mappedBy = "owner")
+    private List<Image> images;
+
+    public Owner(String name, String country, String phone, String email) {
         this.name = name;
         this.country = country;
         this.phone = phone;

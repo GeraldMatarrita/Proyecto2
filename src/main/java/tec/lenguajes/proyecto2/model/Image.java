@@ -23,9 +23,14 @@ public class Image {
     private List<String> keywords;
 
     @ManyToOne
-    @JoinColumn(name = "autor")
-    private Person autor;
+    @JoinColumn(name = "author")
+    private Person author;
+    @Enumerated(EnumType.STRING)
     private License license;
+
+    @ManyToOne
+    @JoinColumn(name = "images")
+    private Owner owner;
 
     @ManyToOne
     @JoinColumn(name = "taxon")
