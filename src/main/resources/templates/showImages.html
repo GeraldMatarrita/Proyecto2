@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Mostrar Imágenes</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="col-12">
+        <h2>Lista de Imágenes</h2>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>
+<!--        <a class="btn btn-success mb-2" th:href="@{/images/createMaintenance}">Agregar</a>-->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Autor</th>
+                    <th>Licencia</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="image : ${images}">
+                    <td th:text="${image.id}"></td>
+                    <td th:text="${image.description}"></td>
+                    <td th:text="${image.date}"></td>
+                    <td th:text="${image.author.name}"></td>
+                    <td th:text="${image.license}"></td>
+                    <td>
+                        <a class="btn btn-warning" th:href="@{/images/maintenance/edit/} + ${image.id}">Editar <i
+                                class="fa fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <form th:action="@{/images/deleteMaintenance}" method="post">
+                            <input type="hidden" name="id" th:value="${image.id}"/>
+                            <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <a class="btn btn-primary" th:href="@{/users/maintenance}">Volver al Inicio</a>
+    </div>
+</main>
+
+</body>
+</html>
