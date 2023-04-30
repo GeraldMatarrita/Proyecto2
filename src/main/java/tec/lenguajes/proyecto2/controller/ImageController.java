@@ -15,16 +15,28 @@ import tec.lenguajes.proyecto2.repository.ImageRepository;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(path ="/images")
+@RequestMapping(path = "/images")
 public class ImageController {
     @Autowired
     private ImageRepository imageRepository;
 
     @RequestMapping(value = "/show")
-    public String showImage (Model model) {
-        model.addAttribute("images", imageRepository.findAll());
-
+    public String showImage(Model model) {
+        model.addAttribute("imagenes", imageRepository.findAll());
 //        model.addAttribute()
-        return "/showImages";
+        return "showImages";
+    }
+
+    @GetMapping(value ="show/{id}")
+    public String showImageById(@PathVariable Integer id, Model model) {
+        Optional<Image> image = imageRepository.findFirstById(id);
+
+
+        if (image.isPresent()) {
+            model.addAttribute("image", image.get());
+            return "showImage";
+        } else {
+            return "error";
+        }
     }
 }

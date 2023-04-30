@@ -11,6 +11,8 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Table(name = "person")
+@PrimaryKeyJoinColumn(name = "owner_id")
 //@NoArgsConstructor
 public class Person extends Owner implements Serializable {
 
@@ -28,4 +30,5 @@ public class Person extends Owner implements Serializable {
         super(name, country, phone, email);
         this.lastName = lastName;
     }
+
 }

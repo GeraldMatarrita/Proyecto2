@@ -10,8 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class Owner {
 
     @Id
@@ -22,8 +21,10 @@ public abstract class Owner {
     private String phone;
     private String email;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Image> images;
+    private String type;
+
+//    @OneToMany(mappedBy = "owner")
+//    private List<Image> images;
 
     public Owner(String name, String country, String phone, String email) {
         this.name = name;
