@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
 <head>
     <title>Catálogo</title>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -16,7 +17,7 @@
              th:text="${mensaje}"
              class="alert">
         </div>
-<!--        <a class="btn btn-success mb-2" th:href="@{/images/createMaintenance}">Agregar</a>-->
+        <a class="btn btn-success mb-2" th:href="@{/images/create}">Agregar</a>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -33,17 +34,21 @@
                 <tr th:each="image : ${imagenes}">
                     <td th:text="${image.id}"></td>
                     <td th:text="${image.description}"></td>
-                    <td th:text="${image.date}"></td>
+                    <td th:text="${#dates.format(image.date, 'yyyy-MM-dd')}"></td>
                     <td th:text="${image.author.name}"></td>
                     <td th:text="${image.license}"></td>
                     <td th:if="${image.ownerInstitution != null}" th:text="${image.ownerInstitution.name}"></td>
                     <td th:if="${image.ownerPerson != null}" th:text="${image.ownerPerson.name}"></td>
-                    <td>
-                        <a class="btn btn-warning" th:href="@{/images/show/} + ${image.id}">Ver<i
+                    <td class="text-center">
+                        <a class="btn btn-info" th:href="@{/images/show/} + ${image.id}">Ver<i
                                 class="fa fa-edit"></i></a>
                     </td>
-                    <td>
-                        <form th:action="@{/imagesServer/deleteMaintenance}" method="post">
+                    <td class="text-center">
+                        <a class="btn btn-warning" th:href="@{/images/edit/} + ${image.id}">Editar<i
+                                class="fa fa-edit"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <form th:action="@{/images/delete}" method="post">
                             <input type="hidden" name="id" th:value="${image.id}"/>
                             <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
                             </button>
@@ -53,7 +58,7 @@
                 </tbody>
             </table>
         </div>
-        <a class="btn btn-primary" th:href="@{/users/maintenance}">Volver al Inicio</a>
+        <a type="button" class="btn btn-primary" th:href="@{/home}">Volver al Inicio</a>
     </div>
 </main>
 

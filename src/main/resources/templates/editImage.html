@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Editar Imagen</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="col-12">
+        <h2>Editar Imagen</h2>
+        <form th:object="${image}" th:action="@{/images/edit/} + ${image.id}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <label for="id">Código de la imagen</label>
+                <input readonly th:field="*{id}" id="id"
+                       type="text"
+                       class="form-control"
+                       th:classappend="${#fields.hasErrors('id')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group">
+                <label for="description">Descripción</label>
+                <input th:field="*{description}" autocomplete="off" autofocus id="description"
+                       type="text"
+                       class="form-control"
+                       th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group">
+                <label for="date">Fecha</label>
+                <input th:field="*{date}" autocomplete="off" autofocus id="date"
+                       type="date"
+                       class="input-group date"
+                       th:classappend="${#fields.hasErrors('date')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group">
+                <label for="author">Autor</label>
+                <select th:field="*{author}" class="form-select" aria-label="Selecciona un autor" id="author">
+                    <option th:each="author : ${authors}"
+                            th:value="${author.id}"
+                            th:text="${author.name}"/>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="license">Licencia</label>
+                <select th:field="*{license}" class="form-select" aria-label="Selecciona una licencia" autofocus
+                        id="license">
+                    <option value="CC_BY">CC BY</option>
+                    <option value="CC_BY_SA">CC BY-SA</option>
+                    <option value="CC_BY_ND">CC BY-ND</option>
+                    <option value="CC_BY_NC">CC BY-NC</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ownerType">Tipo de dueño</label>
+                <select class="form-select" aria-label="Selecciona un tipo de dueño" autofocus id="ownerType">
+                    <option value="PERSON" th:selected="${image.ownerPerson != null}">Persona</option>
+                    <option value="INSTITUTION" th:selected="${image.ownerInstitution != null}">Institución</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="institutionSelect" style="display:none;">
+                <label for="ownerInstitution">Dueño</label>
+                <select th:field="*{ownerInstitution}" aria-label="Selecciona un dueño" autofocus id="ownerInstitution">
+                    <option th:each="institution : ${institutions}"
+                            th:value="${institution.id}"
+                            th:text="${institution.name}"
+                            th:selected="${institution.id == image.ownerInstitution?.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group" id="personSelect" style="display:none;">
+                <label for="ownerPerson">Dueño</label>
+                <select th:field="*{ownerPerson}" aria-label="Selecciona un dueño" autofocus id="ownerPerson">
+                    <option th:each="person : ${persons}"
+                            th:value="${person.id}"
+                            th:text="${person.name}"
+                            th:selected="${person.id == image.ownerPerson?.id}">
+                    </option>
+                </select>
+            </div>
+
+            <script>
+                const ownerTypeSelect = document.querySelector('#ownerType');
+                const institutionSelect = document.querySelector('#institutionSelect');
+                const personSelect = document.querySelector('#personSelect');
+
+                ownerTypeSelect.addEventListener('change', () => {
+                    if (ownerTypeSelect.value === 'INSTITUTION') {
+                        institutionSelect.style.display = 'block';
+                        personSelect.style.display = 'none';
+                    } else if (ownerTypeSelect.value === 'PERSON') {
+                        institutionSelect.style.display = 'none';
+                        personSelect.style.display = 'block';
+                    } else {
+                        institutionSelect.style.display = 'none';
+                        personSelect.style.display = 'none';
+                    }
+                });
+
+                // Show the relevant select based on the initially selected owner type
+                if (ownerTypeSelect.value === 'INSTITUTION') {
+                    institutionSelect.style.display = 'block';
+                    personSelect.style.display = 'none';
+                } else if (ownerTypeSelect.value === 'PERSON') {
+                    institutionSelect.style.display = 'none';
+                    personSelect.style.display = 'block';
+                } else {
+                    institutionSelect.style.display = 'none';
+                    personSelect.style.display = 'none';
+                }
+            </script>
+
+<!--            <div class="form-group" th:if="${image.ownerInstitution != null}">-->
+<!--                <label for="ownerInstitution_">Dueño</label>-->
+<!--                <input th:field="*{ownerInstitution.name}" autocomplete="off" autofocus id="ownerInstitution_"-->
+<!--                       type="text"-->
+<!--                       class="form-control"-->
+<!--                       th:classappend="${#fields.hasErrors('ownerInstitution')} ? 'is-invalid' : ''">-->
+<!--            </div>-->
+<!--            <div class="form-group" th:if="${image.ownerPerson != null}">-->
+<!--                <label for="ownerPerson_">Dueño</label>-->
+<!--                <input th:field="*{ownerPerson.name}" autocomplete="off" autofocus id="ownerPerson_"-->
+<!--                       type="text"-->
+<!--                       class="form-control"-->
+<!--                       th:classappend="${#fields.hasErrors('ownerPerson_')} ? 'is-invalid' : ''">-->
+<!--            </div>-->
+            <button class="btn btn-success" type="submit">Guardar</button>
+            &nbsp;<a class="btn btn-danger" th:href="@{/image/show}">Cancelar</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>
