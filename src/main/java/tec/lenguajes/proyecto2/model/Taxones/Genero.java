@@ -25,4 +25,15 @@ public class Genero extends Taxon implements Serializable {
     public Genero() {
         super();
     }
+
+    @Override
+    public boolean initialLetterVerification(String name) {
+        String capitalizeLetter = name.substring(0, 1).toUpperCase();
+        return capitalizeLetter.equals(name.substring(0, 1));
+    }
+
+    @Override
+    public boolean suffixVerification(String name) {
+        return true;
+    }
 }

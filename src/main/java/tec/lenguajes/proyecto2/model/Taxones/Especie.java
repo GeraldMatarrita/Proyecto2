@@ -28,4 +28,15 @@ public class Especie extends Taxon implements Serializable {
     public Especie() {
         super();
     }
+
+    @Override
+    public boolean initialLetterVerification(String name) {
+        String minusculeLetter = name.substring(0, 1).toLowerCase();
+        return minusculeLetter.equals(name.substring(0, 1));
+    }
+
+    @Override
+    public boolean suffixVerification(String name) {
+        return true;
+    }
 }

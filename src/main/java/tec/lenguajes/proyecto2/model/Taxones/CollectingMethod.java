@@ -8,6 +8,10 @@ public enum CollectingMethod {
 
     public final String text;
 
+    public String getText() {
+        return text;
+    }
+
     CollectingMethod(String text) {
         this.text = text;
     }

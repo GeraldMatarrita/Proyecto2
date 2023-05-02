@@ -26,4 +26,16 @@ public class Division extends Taxon implements Serializable {
     public Division() {
         super();
     }
+
+    @Override
+    public boolean initialLetterVerification(String name) {
+        String capitalizeLetter = name.substring(0, 1).toUpperCase();
+        return capitalizeLetter.equals(name.substring(0, 1));
+    }
+
+    @Override
+    public boolean suffixVerification (String name) {
+        String suffix = name.length()>5? name.substring(name.length() - 5, name.length()): "";
+        return suffix.equals("phyta");
+    }
 }

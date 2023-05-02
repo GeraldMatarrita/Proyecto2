@@ -27,4 +27,8 @@ public abstract class Taxon {
     //año de publicación del taxon
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publication_year;
+
+    public abstract boolean initialLetterVerification(String name);
+
+    public abstract boolean suffixVerification(String name);
 }
