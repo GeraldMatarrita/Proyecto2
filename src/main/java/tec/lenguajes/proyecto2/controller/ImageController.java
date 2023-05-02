@@ -1,22 +1,15 @@
 package tec.lenguajes.proyecto2.controller;
 
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tec.lenguajes.proyecto2.model.Image;
-import tec.lenguajes.proyecto2.repository.EspecieRepository;
-import tec.lenguajes.proyecto2.repository.ImageRepository;
-import tec.lenguajes.proyecto2.repository.InstitutionRepository;
-import tec.lenguajes.proyecto2.repository.PersonRepository;
+import tec.lenguajes.proyecto2.repository.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 @Controller
@@ -32,8 +25,25 @@ public class ImageController {
     private InstitutionRepository institutionRepository;
 
     @Autowired
+    private ClaseRepository claseRepository;
+
+    @Autowired
+    private DivisionRepository divisionRepository;
+
+    @Autowired
     private EspecieRepository especieRepository;
 
+    @Autowired
+    private FamiliaRepository familiaRepository;
+
+    @Autowired
+    private GeneroRepository generoRepository;
+
+    @Autowired
+    private OrdenRepository ordenRepository;
+
+    @Autowired
+    private ReinoRepository reinoRepository;
 
 
     @RequestMapping(value = "/show")
@@ -60,6 +70,13 @@ public class ImageController {
         model.addAttribute("persons", personRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         model.addAttribute("especies", especieRepository.findAll());
+        model.addAttribute("especies", especieRepository.findAll());
+        model.addAttribute("clases", claseRepository.findAll());
+        model.addAttribute("divisiones", divisionRepository.findAll());
+        model.addAttribute("familias", familiaRepository.findAll());
+        model.addAttribute("generos", generoRepository.findAll());
+        model.addAttribute("ordenes", ordenRepository.findAll());
+        model.addAttribute("reinos", reinoRepository.findAll());
         return "createImage";
     }
 
@@ -95,6 +112,13 @@ public class ImageController {
         model.addAttribute("authors", personRepository.findAll());
         model.addAttribute("persons", personRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
+        model.addAttribute("especies", especieRepository.findAll());
+        model.addAttribute("clases", claseRepository.findAll());
+        model.addAttribute("divisiones", divisionRepository.findAll());
+        model.addAttribute("familias", familiaRepository.findAll());
+        model.addAttribute("generos", generoRepository.findAll());
+        model.addAttribute("ordenes", ordenRepository.findAll());
+        model.addAttribute("reinos", reinoRepository.findAll());
         return "editImage";
     }
 

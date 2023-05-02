@@ -65,6 +65,48 @@
                        type="text"
                        class="form-control" th:classappend="${#fields.hasErrors('ownerPerson')} ? 'is-invalid' : ''">
             </div>
+            <div class="form-group" th:if="${image.reino != null}">
+                <label for="reino">Reino</label>
+                <input readonly th:field="*{reino.scientific_name}" id="reino"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('reino')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.division != null}">
+                <label for="division">División</label>
+                <input readonly th:field="*{division.scientific_name}" id="division"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('reino')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.clase != null}">
+                <label for="clase">Clase</label>
+                <input readonly th:field="*{clase.scientific_name}" id="clase"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('clase')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.orden != null}">
+                <label for="orden">Orden</label>
+                <input readonly th:field="*{orden.scientific_name}" id="orden"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('orden')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.familia != null}">
+                <label for="familia">Familia</label>
+                <input readonly th:field="*{familia.scientific_name}" id="familia"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('familia')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.genero != null}">
+                <label for="genero">Género</label>
+                <input readonly th:field="*{genero.scientific_name}" id="genero"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('genero')} ? 'is-invalid' : ''">
+            </div>
+            <div class="form-group" th:if="${image.especie != null}">
+                <label for="especie">Especie</label>
+                <input readonly th:field="*{especie.scientific_name}" id="especie"
+                       type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('especie')} ? 'is-invalid' : ''">
+            </div>
         </form>
     </div>
         <a type="button" class="btn btn-primary" th:href="@{/images/show}">Volver</a>
