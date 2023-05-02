@@ -108,6 +108,13 @@
                        class="form-control" th:classappend="${#fields.hasErrors('especie')} ? 'is-invalid' : ''">
             </div>
         </form>
+        <a class="btn btn-warning" th:href="@{/images/edit/} + ${image.id}">Editar<i
+                class="fa fa-edit"></i></a>
+        <form th:action="@{/images/delete}" method="post">
+            <input type="hidden" name="id" th:value="${image.id}"/>
+            <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
+            </button>
+        </form>
     </div>
         <a type="button" class="btn btn-primary" th:href="@{/images/show}">Volver</a>
     </div>

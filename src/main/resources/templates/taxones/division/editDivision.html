@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Editar División</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="col-12">
+    <h2>Editar División</h2>
+    <form th:object="${division}" th:action="@{/divisiones/edit/} + ${division.id}" method="post">
+      <input type="hidden" th:field="*{id}">
+      <div class="form-group">
+        <label for="id">Código de la division</label>
+        <input readonly th:field="*{id}" id="id"
+               type="text"
+               class="form-control"
+               th:classappend="${#fields.hasErrors('id')} ? 'is-invalid' : ''">
+      </div>
+      <div class="form-group">
+        <label for="name">Nombre (Debe iniciar en mayúscula y finalizar en 'phyta')</label>
+        <input th:field="*{scientific_name}" autocomplete="off" autofocus id="name"
+               type="text"
+               class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="publication_year">Fecha</label>
+        <input th:field="*{publication_year}" autocomplete="off" autofocus id="publication_year"
+               type="date"
+               class="input-group date"
+               th:classappend="${#fields.hasErrors('publication_year')} ? 'is-invalid' : ''">
+      </div>
+      <div class="form-group">
+        <label for="author">Autor</label>
+        <input th:field="*{author}" autocomplete="off" autofocus id="author"
+               type="text"
+               class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="divisionSelect">Padre</label>
+        <select th:field="*{parent}" aria-label="Selecciona un dueño" autofocus id="divisionSelect">
+          <option th:each="reino : ${reinos}"
+                  th:value="${reino.id}"
+                  th:text="${reino.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <button class="btn btn-success" type="submit">Guardar</button>
+      &nbsp;<a class="btn btn-danger" th:href="@{/divisiones/show}">Cancelar</a>
+    </form>
+  </div>
+</main>
+</body>
+</html>
