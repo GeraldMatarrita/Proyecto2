@@ -16,6 +16,10 @@ import java.util.List;
 @Setter
 @Getter
 public class Especie extends Taxon implements Serializable {
+
+    @OneToOne
+    private Genero parent;
+
     private String specimen_location_rack;
     private String specimen_location_drawer;
 

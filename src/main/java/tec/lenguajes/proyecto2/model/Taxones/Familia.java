@@ -16,6 +16,9 @@ import java.util.List;
 @Getter
 public class Familia extends Taxon implements Serializable  {
 
+    @OneToOne
+    private Orden parent;
+
     @OneToMany(mappedBy = "familia")
     private List<Image> imagesFamilia;
 

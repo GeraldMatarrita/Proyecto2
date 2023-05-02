@@ -16,6 +16,9 @@ import java.util.List;
 @Setter
 public class Genero extends Taxon implements Serializable {
 
+    @OneToOne
+    private Familia parent;
+
     @OneToMany(mappedBy = "genero")
     private List<Image> imagesGenero;
 

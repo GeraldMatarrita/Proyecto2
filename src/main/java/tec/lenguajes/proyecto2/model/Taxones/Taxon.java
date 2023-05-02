@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import tec.lenguajes.proyecto2.model.Image;
 
 import java.util.Date;
@@ -24,5 +25,6 @@ public abstract class Taxon {
     //autor
     private String author;
     //año de publicación del taxon
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publication_year;
 }

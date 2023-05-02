@@ -17,6 +17,9 @@ import java.util.List;
 @Setter
 public class Division extends Taxon implements Serializable {
 
+    @OneToOne
+    private Reino parent;
+
     @OneToMany(mappedBy = "division")
     private List<Image> imagesDivision;
 

@@ -17,6 +17,9 @@ import java.util.List;
 @Setter
 public class Orden extends Taxon implements Serializable {
 
+    @OneToOne
+    private Clase parent;
+
     @OneToMany(mappedBy = "orden")
     private List<Image> imagesOrden;
 
