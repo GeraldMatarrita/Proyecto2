@@ -10,6 +10,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tec.lenguajes.proyecto2.model.Image;
 import tec.lenguajes.proyecto2.repository.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -97,6 +100,28 @@ public class ImageController {
                     .addAttribute("clase", "danger");
             return "redirect:/images/show";
         }
+
+        List<String> keywords = new ArrayList<>();
+
+        keywords.add(image.getId().toString());
+        keywords.add(image.getAuthor().getName());
+        if (image.getOwnerPerson() != null) {
+            keywords.add(image.getOwnerPerson().getLastName());
+        } else {
+            keywords.add(image.getOwnerInstitution().getWebSite());
+        }
+        keywords.add(image.getAuthor().getName());
+        keywords.add(image.getAuthor().getLastName());
+        keywords.add(image.getEspecie().getScientific_name());
+        keywords.add(image.getGenero().getScientific_name());
+        keywords.add(image.getFamilia().getScientific_name());
+        keywords.add(image.getOrden().getScientific_name());
+        keywords.add(image.getClase().getScientific_name());
+        keywords.add(image.getDivision().getScientific_name());
+        keywords.add(image.getReino().getScientific_name());
+        String[] description = image.getDescription().split(" ");
+        keywords.addAll(Arrays.asList(description));
+        image.setKeywords(keywords);
 
         imageRepository.save(image);
         redirectAttributes

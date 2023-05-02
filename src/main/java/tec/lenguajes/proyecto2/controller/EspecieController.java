@@ -51,6 +51,13 @@ public class EspecieController {
             return "redirect:/especies/show";
         }
 
+        if (!especie.suffixVerification(especie.getScientific_name()) || !especie.initialLetterVerification(especie.getScientific_name())) {
+            redirectAttributes
+                    .addFlashAttribute("message", "No cumple con el formato de nombre científico")
+                    .addAttribute("clase", "danger");
+            return "redirect:/especies/show";
+        }
+
         especieRepository.save(especie);
         redirectAttributes
                 .addFlashAttribute("message", "Especie creada con éxito")
@@ -76,19 +83,26 @@ public class EspecieController {
             return "redirect:/especies/show";
         }
 
+        if (!especie.suffixVerification(especie.getScientific_name()) || !especie.initialLetterVerification(especie.getScientific_name())) {
+            redirectAttributes
+                    .addFlashAttribute("message", "No cumple con el formato de nombre científico")
+                    .addAttribute("clase", "danger");
+            return "redirect:/familias/show";
+        }
+
         Especie posibleEspecie = especieRepository.findFirstById(especie.getId()).orElse(null);
 
         if (posibleEspecie == null) {
             redirectAttributes
                     .addFlashAttribute("message", "Error al editar la imagen")
                     .addAttribute("clase", "danger");
-            return "redirect:/images/show";
+            return "redirect:/especies/show";
         }
 
         especieRepository.save(especie);
 
         redirectAttributes
-                .addFlashAttribute("message", "Imagen editada con éxito")
+                .addFlashAttribute("message", "Clase editada con éxito")
                 .addAttribute("clase", "success");
         return "redirect:/especies/show";
     }
@@ -97,7 +111,7 @@ public class EspecieController {
     public String deleteImage(@ModelAttribute Especie especie, RedirectAttributes redirectAttributes) {
         especieRepository.delete(especie);
         redirectAttributes
-                .addFlashAttribute("message", "Imagen eliminada con éxito")
+                .addFlashAttribute("message", "Clase eliminada con éxito")
                 .addAttribute("clase", "success");
         return "redirect:/especies/show";
     }
