@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Agregar Especie</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="col-12">
+    <h2>Información de la especie</h2>
+    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+         th:text="${mensaje}"
+         class="alert">
+    </div>
+    <form th:object="${newEspecie}" th:action="@{/especies/create}" method="post">
+      <div class="form-group">
+        <label for="description">Descripción de la imagen</label>
+        <input autocomplete="off" autofocus th:field="*{description}" id="description"
+               placeholder="Describe la imagen" type="text"
+               class="form-control" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''">
+        <div class="invalid-feedback" th:errors="*{description}"></div>
+      </div>
+      <div class="form-group">
+        <label for="date">Fecha</label>
+        <input autocomplete="off" autofocus th:field="*{date}" id="date"
+               type="date"
+               class="input-group date"
+               th:classappend="${#fields.hasErrors('date')} ? 'is-invalid' : ''">
+      </div>
+      <div class="form-group">
+        <label for="author">Autor</label>
+        <select th:field="*{author}" class="form-select" aria-label="Selecciona un autor" id="author">
+          <option hidden selected disabled value="">Selecciona una opción</option>
+          <option th:each="author : ${authors}"
+                  th:value="${author.id}"
+                  th:text="${author.name}"/>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="license">Licencia</label>
+        <select th:field="*{license}" class="form-select" aria-label="Selecciona una licencia"
+                id="license">
+          <option hidden selected disabled value="">Selecciona una opción</option>
+          <option value="CC_BY">CC BY</option>
+          <option value="CC_BY_SA">CC BY-SA</option>
+          <option value="CC_BY_ND">CC BY-ND</option>
+          <option value="CC_BY_NC">CC BY-NC</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="ownerType">Tipo de dueño</label>
+        <select class="form-select" aria-label="Selecciona un tipo de dueño" autofocus id="ownerType">
+          <option hidden selected disabled value="">Selecciona una opción</option>
+          <option value="PERSON">Persona</option>
+          <option value="INSTITUTION">Institución</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="institutionSelect" style="display:none;">
+        <label for="ownerInstitution">Dueño</label>
+        <select th:field="*{ownerInstitution}" aria-label="Selecciona un dueño" autofocus id="ownerInstitution">
+          <option hidden selected disabled value="">Selecciona una opción</option>
+          <option th:each="institution : ${institutions}"
+                  th:value="${institution.id}"
+                  th:text="${institution.name}">
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group" id="personSelect" style="display:none;">
+        <label for="ownerPerson">Dueño</label>
+        <select th:field="*{ownerPerson}" aria-label="Selecciona un dueño" autofocus id="ownerPerson">
+          <option hidden selected disabled value="">Selecciona una opción</option>
+          <option th:each="person : ${persons}"
+                  th:value="${person.id}"
+                  th:text="${person.name}">
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="especie">Especie</label>
+        <select th:field="*{especie}" class="form-select" aria-label="Selecciona un autor"
+                id="especie">
+          <option th:each="especie : ${especies}"
+                  th:value="${especie.id}"
+                  th:text="${especie.scientific_name}"/>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="reinoSelect">Reino</label>
+        <select th:field="*{reino}" aria-label="Selecciona un dueño" autofocus id="reinoSelect">
+          <option th:each="reino : ${reinos}"
+                  th:value="${reino.id}"
+                  th:text="${reino.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="divisionSelect">División</label>
+        <select th:field="*{division}" aria-label="Selecciona un dueño" autofocus id="divisionSelect">
+          <option th:each="division : ${divisiones}"
+                  th:value="${division.id}"
+                  th:text="${division.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="claseSelect">Clase</label>
+        <select th:field="*{clase}" aria-label="Selecciona un dueño" autofocus id="claseSelect">
+          <option th:each="clase : ${clases}"
+                  th:value="${clase.id}"
+                  th:text="${clase.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="ordenSelect">Orden</label>
+        <select th:field="*{orden}" aria-label="Selecciona un dueño" autofocus id="ordenSelect">
+          <option th:each="orden : ${ordenes}"
+                  th:value="${orden.id}"
+                  th:text="${orden.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="familiaSelect">Familia</label>
+        <select th:field="*{familia}" aria-label="Selecciona un dueño" autofocus id="familiaSelect">
+          <option th:each="familia : ${familias}"
+                  th:value="${familia.id}"
+                  th:text="${familia.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="generoSelect">Género</label>
+        <select th:field="*{genero}" aria-label="Selecciona un dueño" autofocus id="generoSelect">
+          <option th:each="genero : ${generos}"
+                  th:value="${genero.id}"
+                  th:text="${genero.scientific_name}">
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="especieSelect">Especie</label>
+        <select th:field="*{especie}" aria-label="Selecciona un dueño" autofocus id="especieSelect">
+          <option th:each="especie : ${especies}"
+                  th:value="${especie.id}"
+                  th:text="${especie.scientific_name}">
+          </option>
+        </select>
+      </div>
+
+      <script>
+        const ownerTypeSelect = document.querySelector('#ownerType');
+        const institutionSelect = document.querySelector('#institutionSelect');
+        const personSelect = document.querySelector('#personSelect');
+        const ownerInstitutionSelect = document.querySelector('#ownerInstitution');
+        const ownerPersonSelect = document.querySelector('#ownerPerson');
+
+        ownerTypeSelect.addEventListener('change', () => {
+          if (ownerTypeSelect.value === 'INSTITUTION') {
+            institutionSelect.style.display = 'block';
+            personSelect.style.display = 'none';
+            ownerPersonSelect.value = null;
+          } else if (ownerTypeSelect.value === 'PERSON') {
+            institutionSelect.style.display = 'none';
+            personSelect.style.display = 'block';
+            ownerInstitutionSelect.value = null;
+          } else {
+            institutionSelect.style.display = 'none';
+            personSelect.style.display = 'none';
+            ownerInstitutionSelect.value = null;
+            ownerPersonSelect.value = null;
+          }
+        });
+
+        // Show the relevant select based on the initially selected owner type
+        if (ownerTypeSelect.value === 'INSTITUTION') {
+          institutionSelect.style.display = 'block';
+          personSelect.style.display = 'none';
+        } else if (ownerTypeSelect.value === 'PERSON') {
+          institutionSelect.style.display = 'none';
+          personSelect.style.display = 'block';
+        } else {
+          institutionSelect.style.display = 'none';
+          personSelect.style.display = 'none';
+        }
+      </script>
+      <button class="btn btn-success" type="submit">Guardar</button>
+      <a class="btn btn-warning" th:href="@{/images/show}">Ver todos</a>
+    </form>
+  </div>
+</main>
+</body>
+</html>

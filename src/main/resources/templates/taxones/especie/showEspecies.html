@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<head>
+  <title>Especies</title>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="col-12">
+    <h2>Especies</h2>
+    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+         th:text="${mensaje}"
+         class="alert">
+    </div>
+    <a class="btn btn-success mb-2" th:href="@{/especies/create}">Agregar</a>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre científico</th>
+          <th>Fecha Publicación</th>
+          <th>Autor</th>
+          <th>Género Padre</th>
+          <th>Ubicación en cajón</th>
+          <th>Ubicación en estante</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="especie : ${especies}">
+          <td th:text="${especie.id}"></td>
+          <td th:text="${especie.scientific_name}"></td>
+          <td th:text="${#dates.format(especie.publication_year, 'yyyy-MM-dd')}"></td>
+          <td th:text="${especie.author}"></td>
+            <td th:text="${especie.parent.scientific_name}"></td>
+          <td th:text="${especie.specimen_location_drawer}"></td>
+          <td th:text="${especie.specimen_location_rack}"></td>
+          <td class="text-center">
+            <a class="btn btn-warning" th:href="@{/especies/edit/} + ${especie.id}">Editar<i
+                    class="fa fa-edit"></i></a>
+          </td>
+          <td class="text-center">
+            <form th:action="@{/especies/delete}" method="post">
+              <input type="hidden" name="id" th:value="${especie.id}"/>
+              <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <a type="button" class="btn btn-primary" th:href="@{/home}">Volver al Inicio</a>
+  </div>
+</main>
+</body>
+</html>
