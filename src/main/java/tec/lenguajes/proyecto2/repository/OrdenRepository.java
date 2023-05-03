@@ -1,6 +1,7 @@
 package tec.lenguajes.proyecto2.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import tec.lenguajes.proyecto2.model.Taxones.Clase;
 import tec.lenguajes.proyecto2.model.Taxones.Orden;
 
 import java.util.Optional;
@@ -13,4 +14,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     // Método que busca una orden por su id.
     Optional<Orden> findFirstById(Integer id);
+
+    // Método que busca una orden por su padre.
+    Optional<Orden> findFirstByParent(Clase clase);
 }

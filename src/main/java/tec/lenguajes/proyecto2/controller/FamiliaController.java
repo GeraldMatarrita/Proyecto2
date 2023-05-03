@@ -33,6 +33,8 @@ public class FamiliaController {
      */
     @Autowired
     private OrdenRepository ordenRepository;
+    @Autowired
+    private GeneroRepository generoRepository;
 
     /*
        Método que muestra todas las Familias existentes.
@@ -177,6 +179,14 @@ public class FamiliaController {
         if (familia.getImagesFamilia() != null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar la familia porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/familias/show";
+        }
+
+        // Verifica si la Familia tiene géneros asociados.
+        if (generoRepository.findFirstByParent(familia).isPresent()) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la familia porque tiene géneros asociados")
                     .addAttribute("clase", "danger");
             return "redirect:/familias/show";
         }

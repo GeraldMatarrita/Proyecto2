@@ -8,10 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tec.lenguajes.proyecto2.model.Taxones.Division;
+import tec.lenguajes.proyecto2.repository.*;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
-import tec.lenguajes.proyecto2.repository.DivisionRepository;
-import tec.lenguajes.proyecto2.repository.ReinoRepository;
 
 /*
     Controlador de la clase Division.
@@ -34,6 +33,8 @@ public class DivisionController {
      */
     @Autowired
     private ReinoRepository reinoRepository;
+    @Autowired
+    private ClaseRepository claseRepository;
 
 
     /*
@@ -177,6 +178,14 @@ public class DivisionController {
         if (division.getImagesDivision() != null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar la división porque tiene imágenes asociadas")
+                    .addAttribute("division", "danger");
+            return "redirect:/divisiones/show";
+        }
+
+        // Verifica si la división tiene clases asociadas.
+        if (claseRepository.findFirstByParent(division).isPresent()){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la división porque tiene clases asociadas")
                     .addAttribute("division", "danger");
             return "redirect:/divisiones/show";
         }

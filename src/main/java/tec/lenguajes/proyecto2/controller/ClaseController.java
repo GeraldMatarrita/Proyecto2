@@ -11,6 +11,7 @@ import tec.lenguajes.proyecto2.model.Taxones.Clase;
 import tec.lenguajes.proyecto2.repository.ClaseRepository;
 import tec.lenguajes.proyecto2.repository.ClaseRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
+import tec.lenguajes.proyecto2.repository.OrdenRepository;
 
 /*
     Controlador de la clase Clase.
@@ -33,6 +34,8 @@ public class ClaseController {
      */
     @Autowired
     private DivisionRepository divisionRepository;
+    @Autowired
+    private OrdenRepository ordenRepository;
 
     /*
        Método que muestra todas las Clases existentes.
@@ -177,6 +180,14 @@ public class ClaseController {
         if (clase.getImagesClase() != null){
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar la clase porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/clases/show";
+        }
+
+        // Verifica si la Clase tiene Ordenes asociadas.
+        if (ordenRepository.findFirstByParent(clase).isPresent()) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la clase porque tiene ordenes asociadas")
                     .addAttribute("clase", "danger");
             return "redirect:/clases/show";
         }

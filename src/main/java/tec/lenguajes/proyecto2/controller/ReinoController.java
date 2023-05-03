@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tec.lenguajes.proyecto2.model.Taxones.Reino;
+import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.ReinoRepository;
 import tec.lenguajes.proyecto2.repository.ReinoRepository;
 
@@ -21,6 +22,8 @@ public class ReinoController {
      */
     @Autowired
     private ReinoRepository reinoRepository;
+    @Autowired
+    private DivisionRepository divisionRepository;
 
     /*
       Método que muestra todos los Reinos existentes.
@@ -158,6 +161,14 @@ public class ReinoController {
         if (reino.getImagesReino() != null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar el Reino porque tiene imágenes asociadas")
+                    .addAttribute("reino", "danger");
+            return "redirect:/reinos/show";
+        }
+
+        // Verifica si el Reino tiene divisiones asociadas.
+        if (divisionRepository.findFirstByParent(reino).isPresent()) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar el Reino porque tiene divisiones asociadas")
                     .addAttribute("reino", "danger");
             return "redirect:/reinos/show";
         }

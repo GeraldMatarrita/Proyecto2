@@ -35,6 +35,8 @@ public class OrdenController {
      */
     @Autowired
     private DivisionRepository divisionRepository;
+    @Autowired
+    private FamiliaRepository familiaRepository;
 
     /*
        Método que muestra todas las Órdenes existentes.
@@ -177,6 +179,14 @@ public class OrdenController {
         if (orden.getImagesOrden() != null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar la orden porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/ordenes/show";
+        }
+
+        // Verifica si la Orden tiene familias asociadas
+        if (familiaRepository.findFirstByParent(orden).isPresent()) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la orden porque tiene familias asociadas")
                     .addAttribute("clase", "danger");
             return "redirect:/ordenes/show";
         }

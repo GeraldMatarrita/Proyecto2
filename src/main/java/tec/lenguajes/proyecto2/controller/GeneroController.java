@@ -30,6 +30,8 @@ public class GeneroController {
      */
     @Autowired
     private FamiliaRepository familiaRepository;
+    @Autowired
+    private EspecieRepository especieRepository;
 
     /*
        Método que muestra todas las Géneros existentes.
@@ -172,6 +174,14 @@ public class GeneroController {
         if (genero.getImagesGenero() != null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "No se puede eliminar el género porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/generos/show";
+        }
+
+        // Verifica si el Género tiene especies asociadas.
+        if (especieRepository.findFirstByParent(genero).isPresent()) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar el género porque tiene especies asociadas")
                     .addAttribute("clase", "danger");
             return "redirect:/generos/show";
         }
