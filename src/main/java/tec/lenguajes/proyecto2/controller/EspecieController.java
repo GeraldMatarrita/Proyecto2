@@ -7,11 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import tec.lenguajes.proyecto2.model.Image;
 import tec.lenguajes.proyecto2.model.Taxones.Especie;
 import tec.lenguajes.proyecto2.repository.*;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/especies")

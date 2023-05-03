@@ -11,6 +11,18 @@
     <div class="col-12">
         <h2>Editar Imagen</h2>
         <form th:object="${image}" th:action="@{/images/edit/} + ${image.id}" method="post">
+            <div th:if="${image.path != null}" class="image-container">
+                <div class="col">
+                    <img th:src="${image.path}" alt="Imagen" class="img-fluid rounded">
+                </div>
+            </div>
+
+            <style>
+                .image-container {
+                    max-width: 500px; /* Cambie el valor a lo que desee */
+                }
+            </style>
+            <br>
             <input type="hidden" th:field="*{id}">
             <div class="form-group">
                 <label for="id">Código de la imagen</label>

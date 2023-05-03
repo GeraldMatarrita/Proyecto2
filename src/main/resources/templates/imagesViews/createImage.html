@@ -13,7 +13,14 @@
              th:text="${mensaje}"
              class="alert">
         </div>
-        <form th:object="${newImage}" th:action="@{/images/create}" method="post">
+        <form th:object="${newImage}" th:action="@{/images/create}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="id">Código de la imagen (No es obligatorio)</label>
+                <input autocomplete="off" autofocus th:field="*{id}" id="id"
+                       placeholder="Código de la imagen" type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('id')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{id}"></div>
+            </div>
             <div class="form-group">
                 <label for="description">Descripción de la imagen</label>
                 <input autocomplete="off" autofocus th:field="*{description}" id="description"
@@ -82,16 +89,6 @@
             </div>
 
             <div class="form-group">
-                <label for="especie">Especie</label>
-                <select th:field="*{especie}" class="form-select" aria-label="Selecciona un autor"
-                        id="especie">
-                    <option th:each="especie : ${especies}"
-                            th:value="${especie.id}"
-                            th:text="${especie.scientific_name}"/>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label for="reinoSelect">Reino</label>
                 <select th:field="*{reino}" aria-label="Selecciona un dueño" autofocus id="reinoSelect">
                     <option th:each="reino : ${reinos}"
@@ -153,6 +150,11 @@
                             th:text="${especie.scientific_name}">
                     </option>
                 </select>
+            </div>
+
+            <div class="form-group" >
+                <label for="file">Seleccionar archivo:</label>
+                <input type="file" id="file" name="file" accept=".jpg,.jpeg,.png,.gif" />
             </div>
 
             <script>

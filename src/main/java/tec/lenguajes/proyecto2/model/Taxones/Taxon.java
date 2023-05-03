@@ -6,16 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import tec.lenguajes.proyecto2.model.Image;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
 
 import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @MappedSuperclass
-public abstract class Taxon {
+public abstract class Taxon implements Identificable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

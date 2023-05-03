@@ -1,17 +1,16 @@
-package tec.lenguajes.proyecto2.model;
+package tec.lenguajes.proyecto2.model.Owner;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class Owner {
+public abstract class Owner implements Identificable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

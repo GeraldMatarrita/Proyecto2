@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import tec.lenguajes.proyecto2.model.Image;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
+import tec.lenguajes.proyecto2.model.Image.Image;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Reino extends Taxon implements Serializable {
+public class Reino extends Taxon implements Serializable, Identificable {
 
     @OneToMany(mappedBy = "reino")
     private List<Image> imagesReino;

@@ -1,4 +1,4 @@
-package tec.lenguajes.proyecto2.model;
+package tec.lenguajes.proyecto2.model.Image;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,8 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
+import tec.lenguajes.proyecto2.model.Owner.Institution;
+import tec.lenguajes.proyecto2.model.Owner.Person;
 import tec.lenguajes.proyecto2.model.Taxones.*;
+import tec.lenguajes.proyecto2.repository.ImageRepository;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Image {
+public class Image implements Serializable, Identificable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -25,11 +32,16 @@ public class Image {
     @ElementCollection
     private List<String> keywords;
 
+    @Transient
+    private static int count;
+
     @ManyToOne
     @JoinColumn(name = "author")
     private Person author;
     @Enumerated(EnumType.STRING)
     private License license;
+
+    private String path;
 
     @ManyToOne(targetEntity = Person.class)
     @JoinColumn(name = "owner_person", referencedColumnName = "id")
@@ -67,5 +79,24 @@ public class Image {
     @ManyToOne(targetEntity = Reino.class)
     @JoinColumn(name = "reino", referencedColumnName = "id")
     private Reino reino;
+
+    public static List<String> eliminarArticulos(List<String> palabras) {
+        List<String> palabrasSinArticulos = new ArrayList<>();
+
+        // Artículos en español
+        List<String> articulos = Arrays.asList("el", "la", "los", "las", "un", "una", "unos", "unas");
+
+        for (String palabra : palabras) {
+            if (!articulos.contains(palabra.toLowerCase())) {
+                palabrasSinArticulos.add(palabra);
+            }
+        }
+
+        return palabrasSinArticulos;
+    }
+
+    public static Integer updateCount(ImageRepository imageRepository) {
+        return imageRepository.countImages();
+    }
 
 }

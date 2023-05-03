@@ -1,4 +1,4 @@
-package tec.lenguajes.proyecto2.model;
+package tec.lenguajes.proyecto2.model.Image;
 
 public enum License {
     CC_BY("CC_BY"),

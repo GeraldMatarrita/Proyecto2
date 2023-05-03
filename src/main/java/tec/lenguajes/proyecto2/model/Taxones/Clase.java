@@ -5,7 +5,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
-import tec.lenguajes.proyecto2.model.Image;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
+import tec.lenguajes.proyecto2.model.Image.Image;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Clase extends Taxon implements Serializable {
+public class Clase extends Taxon implements Serializable, Identificable {
     @OneToOne
     private Division parent;
 

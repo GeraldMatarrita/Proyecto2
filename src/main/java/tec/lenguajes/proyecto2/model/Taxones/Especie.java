@@ -2,20 +2,17 @@ package tec.lenguajes.proyecto2.model.Taxones;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tec.lenguajes.proyecto2.Exception.AncestorException;
-import tec.lenguajes.proyecto2.Exception.NameException;
-import tec.lenguajes.proyecto2.model.Image;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
+import tec.lenguajes.proyecto2.model.Image.Image;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Setter
 @Getter
-public class Especie extends Taxon implements Serializable {
+public class Especie extends Taxon implements Serializable, Identificable {
 
     @OneToOne
     private Genero parent;

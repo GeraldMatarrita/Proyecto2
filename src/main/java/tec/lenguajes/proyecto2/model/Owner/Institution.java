@@ -1,9 +1,9 @@
-package tec.lenguajes.proyecto2.model;
+package tec.lenguajes.proyecto2.model.Owner;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
+import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "institution")
 @PrimaryKeyJoinColumn(name = "owner_id")
-public class Institution extends Owner implements Serializable {
+public class Institution extends Owner implements Serializable, Identificable {
     private String webSite;
 
     public Institution() {
