@@ -150,6 +150,7 @@
             <div class="form-group">
                 <label for="especieSelect">Especie</label>
                 <select th:field="*{especie}" aria-label="Selecciona un dueño" autofocus id="especieSelect">
+                    <option th:text="Ninguno" th:value="${null}" th:if="${image.especie == null}" selected></option>
                     <option th:each="especie : ${especies}"
                             th:value="${especie.id}"
                             th:text="${especie.scientific_name}">

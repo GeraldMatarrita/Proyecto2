@@ -8,7 +8,7 @@
 <body>
 <main layout:fragment="content">
     <div class="col-12">
-        <h2>Información del Producto</h2>
+        <h2>Información de la Imagen</h2>
         <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
              th:text="${mensaje}"
              class="alert">
@@ -80,7 +80,6 @@
             <div class="form-group" id="personSelect" style="display:none;">
                 <label for="ownerPerson">Dueño</label>
                 <select th:field="*{ownerPerson}" aria-label="Selecciona un dueño" autofocus id="ownerPerson">
-                    <option hidden selected disabled value="">Selecciona una opción</option>
                     <option th:each="person : ${persons}"
                             th:value="${person.id}"
                             th:text="${person.name}">
@@ -91,6 +90,7 @@
             <div class="form-group">
                 <label for="reinoSelect">Reino</label>
                 <select th:field="*{reino}" aria-label="Selecciona un dueño" autofocus id="reinoSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="reino : ${reinos}"
                             th:value="${reino.id}"
                             th:text="${reino.scientific_name}">
@@ -100,6 +100,7 @@
             <div class="form-group">
                 <label for="divisionSelect">División</label>
                 <select th:field="*{division}" aria-label="Selecciona un dueño" autofocus id="divisionSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="division : ${divisiones}"
                             th:value="${division.id}"
                             th:text="${division.scientific_name}">
@@ -109,6 +110,7 @@
             <div class="form-group">
                 <label for="claseSelect">Clase</label>
                 <select th:field="*{clase}" aria-label="Selecciona un dueño" autofocus id="claseSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="clase : ${clases}"
                             th:value="${clase.id}"
                             th:text="${clase.scientific_name}">
@@ -118,6 +120,7 @@
             <div class="form-group">
                 <label for="ordenSelect">Orden</label>
                 <select th:field="*{orden}" aria-label="Selecciona un dueño" autofocus id="ordenSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="orden : ${ordenes}"
                             th:value="${orden.id}"
                             th:text="${orden.scientific_name}">
@@ -127,6 +130,7 @@
             <div class="form-group">
                 <label for="familiaSelect">Familia</label>
                 <select th:field="*{familia}" aria-label="Selecciona un dueño" autofocus id="familiaSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="familia : ${familias}"
                             th:value="${familia.id}"
                             th:text="${familia.scientific_name}">
@@ -136,6 +140,7 @@
             <div class="form-group">
                 <label for="generoSelect">Género</label>
                 <select th:field="*{genero}" aria-label="Selecciona un dueño" autofocus id="generoSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="genero : ${generos}"
                             th:value="${genero.id}"
                             th:text="${genero.scientific_name}">
@@ -145,6 +150,7 @@
             <div class="form-group">
                 <label for="especieSelect">Especie</label>
                 <select th:field="*{especie}" aria-label="Selecciona un dueño" autofocus id="especieSelect">
+                    <option th:text="Ninguno" th:value="${null}"></option>
                     <option th:each="especie : ${especies}"
                             th:value="${especie.id}"
                             th:text="${especie.scientific_name}">

@@ -148,7 +148,6 @@ public class Image implements Serializable, Identificable {
        Parámetros: Ninguno.
        Retorno: Ninguno.
      */
-
     public void updateKeywords() {
         List<String> keywords = new ArrayList<>();
         this.keywords.add(this.getAuthor().getName());

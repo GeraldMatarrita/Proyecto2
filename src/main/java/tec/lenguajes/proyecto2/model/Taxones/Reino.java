@@ -11,8 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-//@Getter
-//@Setter
+@Getter
+@Setter
 public class Reino extends Taxon implements Serializable, Identificable {
 
     @OneToMany(mappedBy = "reino")
