@@ -172,7 +172,19 @@ public class ClaseController {
      */
     @PostMapping(value = "/delete")
     public String deleteClase(@ModelAttribute Clase clase, RedirectAttributes redirectAttributes) {
+
+        // Verifica si la Clase tiene imágenes asociadas.
+        if (clase.getImagesClase() != null){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la clase porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/clases/show";
+        }
+
+        // Elimina la Clase de la base de datos.
         claseRepository.delete(clase);
+
+        // Redirecciona a la vista de todas las Clases.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Clase eliminada con éxito")
                 .addAttribute("clase", "success");

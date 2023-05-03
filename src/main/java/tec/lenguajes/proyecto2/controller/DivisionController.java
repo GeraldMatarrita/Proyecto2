@@ -12,6 +12,7 @@ import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.ReinoRepository;
+
 /*
     Controlador de la clase Division.
     Se encarga de manejar las peticiones relacionadas con la clase Division.
@@ -109,7 +110,7 @@ public class DivisionController {
         Retorno: Vista que muestra el formulario para editar una Division.
      */
     @GetMapping(value = "/edit/{id}")
-    public String editDivision(Model model, @PathVariable Integer id){
+    public String editDivision(Model model, @PathVariable Integer id) {
         Division divisionAt = divisionRepository.findById(id).orElse(null);
         model.addAttribute("division", divisionAt);
         model.addAttribute("reinos", reinoRepository.findAll());
@@ -171,7 +172,19 @@ public class DivisionController {
      */
     @PostMapping(value = "/delete")
     public String deleteDivision(@ModelAttribute Division division, RedirectAttributes redirectAttributes) {
+
+        // Verifica si la división tiene imágenes asociadas.
+        if (division.getImagesDivision() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la división porque tiene imágenes asociadas")
+                    .addAttribute("division", "danger");
+            return "redirect:/divisiones/show";
+        }
+
+        // Elimina la división de la base de datos.
         divisionRepository.delete(division);
+
+        // Redirecciona a la vista de todas las Divisiones.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Division eliminada con éxito")
                 .addAttribute("division", "success");

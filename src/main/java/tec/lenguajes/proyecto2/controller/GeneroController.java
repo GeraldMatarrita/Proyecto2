@@ -167,7 +167,19 @@ public class GeneroController {
      */
     @PostMapping(value = "/delete")
     public String deleteImage(@ModelAttribute Genero genero, RedirectAttributes redirectAttributes) {
+
+        // Verifica si el Género tiene imágenes asociadas.
+        if (genero.getImagesGenero() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar el género porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/generos/show";
+        }
+
+        // Elimina el Género de la base de datos.
         generoRepository.delete(genero);
+
+        // Redirecciona a la vista de todos los Géneros.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Género eliminada con éxito")
                 .addAttribute("clase", "success");

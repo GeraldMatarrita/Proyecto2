@@ -153,7 +153,19 @@ public class ReinoController {
      */
     @PostMapping(value = "/delete")
     public String deleteReino(@ModelAttribute Reino reino, RedirectAttributes redirectAttributes) {
+
+        // Verifica si el Reino tiene imágenes asociadas.
+        if (reino.getImagesReino() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar el Reino porque tiene imágenes asociadas")
+                    .addAttribute("reino", "danger");
+            return "redirect:/reinos/show";
+        }
+
+        // Elimina el Reino de la base de datos.
         reinoRepository.delete(reino);
+
+        // Redirecciona a la vista de todos los Reinos.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Reino eliminada con éxito")
                 .addAttribute("reino", "success");

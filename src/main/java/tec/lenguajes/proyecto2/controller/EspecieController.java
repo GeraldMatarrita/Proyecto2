@@ -167,7 +167,19 @@ public class EspecieController {
      */
     @PostMapping(value = "/delete")
     public String deleteImage(@ModelAttribute Especie especie, RedirectAttributes redirectAttributes) {
+
+        // Verifica si la Especie tiene imágenes asociadas.
+        if (especie.getImagesEspecie() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la especie porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/especies/show";
+        }
+
+        // Elimina la Especie de la base de datos.
         especieRepository.delete(especie);
+
+        // Redirecciona a la vista que muestra todas las Especies existentes.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Clase eliminada con éxito")
                 .addAttribute("clase", "success");

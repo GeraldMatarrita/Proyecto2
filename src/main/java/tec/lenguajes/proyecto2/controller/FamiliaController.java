@@ -172,7 +172,19 @@ public class FamiliaController {
      */
     @PostMapping(value = "/delete")
     public String deleteFamilia(@ModelAttribute Familia familia, RedirectAttributes redirectAttributes) {
+
+        // Verifica si la familia tiene imágenes asociadas.
+        if (familia.getImagesFamilia() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la familia porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/familias/show";
+        }
+
+        // Elimina la Familia de la base de datos.
         familiaRepository.delete(familia);
+
+        // Redirecciona a la vista de todas las Familias.
         redirectAttributes
                 .addFlashAttribute("mensaje", "Familia eliminada con éxito")
                 .addAttribute("clase", "success");

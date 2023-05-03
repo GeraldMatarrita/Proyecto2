@@ -172,7 +172,19 @@ public class OrdenController {
      */
     @PostMapping(value = "/delete")
     public String deleteOrden(@ModelAttribute Orden orden, RedirectAttributes redirectAttributes) {
+
+        // Verifica si la Orden tiene imágenes asociadas
+        if (orden.getImagesOrden() != null) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "No se puede eliminar la orden porque tiene imágenes asociadas")
+                    .addAttribute("clase", "danger");
+            return "redirect:/ordenes/show";
+        }
+
+        // Elimina la Orden de la base de datos
         ordenRepository.delete(orden);
+
+        // Redirecciona a la vista que muestra todas las Órdenes
         redirectAttributes
                 .addFlashAttribute("mensaje", "Orden eliminada con éxito")
                 .addAttribute("clase", "success");
