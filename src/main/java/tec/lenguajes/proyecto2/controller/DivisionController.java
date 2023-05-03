@@ -85,6 +85,14 @@ public class DivisionController {
             return "redirect:/divisiones/show";
         }
 
+        // Verifica si la division ya existe.
+        if (divisionRepository.existsById(division.getId())) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("division", "danger");
+            return "redirect:/divisiones/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!division.suffixVerification(division.getScientific_name()) || !division.initialLetterVerification(division.getScientific_name())) {
             redirectAttributes

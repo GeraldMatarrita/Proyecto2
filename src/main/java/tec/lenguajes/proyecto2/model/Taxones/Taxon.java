@@ -20,7 +20,6 @@ public abstract class Taxon implements Identificable {
 
     // Identificador del taxon.
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     // Nombre del taxon.

@@ -84,6 +84,14 @@ public class FamiliaController {
             return "redirect:/familias/show";
         }
 
+        // Verifica si la familia ya existe.
+        if (familiaRepository.existsById(familia.getId())){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("clase", "danger");
+            return "redirect:/familias/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!familia.suffixVerification(familia.getScientific_name()) || !familia.initialLetterVerification(familia.getScientific_name())) {
             redirectAttributes

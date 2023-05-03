@@ -85,6 +85,14 @@ public class ClaseController {
             return "redirect:/clases/show";
         }
 
+        // Verifica si la clase ya existe.
+        if (claseRepository.existsById(clase.getId())) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("clase", "danger");
+            return "redirect:/clases/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!clase.suffixVerification(clase.getScientific_name()) || !clase.initialLetterVerification(clase.getScientific_name())) {
             redirectAttributes

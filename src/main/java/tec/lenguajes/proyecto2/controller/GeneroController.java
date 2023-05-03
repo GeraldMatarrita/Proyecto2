@@ -81,6 +81,14 @@ public class GeneroController {
             return "redirect:/generos/show";
         }
 
+        // Verifica si el género ya existe.
+        if (generoRepository.existsById(genero.getId())) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("clase", "danger");
+            return "redirect:/generos/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!genero.suffixVerification(genero.getScientific_name()) || !genero.initialLetterVerification(genero.getScientific_name())) {
             redirectAttributes

@@ -71,6 +71,14 @@ public class ReinoController {
             return "redirect:/reinos/show";
         }
 
+        // Verifica si el reino ya existe.
+        if (reinoRepository.existsById(reino.getId())){
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("reino", "danger");
+            return "redirect:/reinos/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!reino.suffixVerification(reino.getScientific_name()) || !reino.initialLetterVerification(reino.getScientific_name())) {
             redirectAttributes

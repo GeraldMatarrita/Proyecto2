@@ -80,6 +80,14 @@ public class EspecieController {
             return "redirect:/especies/show";
         }
 
+        // Verifica si la especie ya existe.
+        if (especieRepository.existsById(especie.getId())) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
+                    .addAttribute("clase", "warning");
+            return "redirect:/especies/show";
+        }
+
         // Verifica si el nombre científico cumple con el formato.
         if (!especie.suffixVerification(especie.getScientific_name()) || !especie.initialLetterVerification(especie.getScientific_name())) {
             redirectAttributes

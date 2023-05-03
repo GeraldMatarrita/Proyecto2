@@ -37,6 +37,8 @@ public class OrdenController {
     private DivisionRepository divisionRepository;
     @Autowired
     private FamiliaRepository familiaRepository;
+    @Autowired
+    private ClaseRepository claseRepository;
 
     /*
        Método que muestra todas las Órdenes existentes.
@@ -59,7 +61,7 @@ public class OrdenController {
     @GetMapping(value = "/create")
     public String createOrden(Model model) {
         model.addAttribute("newOrden", new Orden());
-        model.addAttribute("divisiones", divisionRepository.findAll());
+        model.addAttribute("clases", claseRepository.findAll());
         return "/taxones/orden/createOrden";
     }
 
@@ -82,6 +84,14 @@ public class OrdenController {
                 || orden.getScientific_name() == null) {
             redirectAttributes
                     .addFlashAttribute("mensaje", "Error al crear la imagen")
+                    .addAttribute("clase", "danger");
+            return "redirect:/ordenes/show";
+        }
+
+        // Verifica si la orden ya existe
+        if (ordenRepository.existsById(orden.getId())) {
+            redirectAttributes
+                    .addFlashAttribute("mensaje", "El id ya está siendo utilizado")
                     .addAttribute("clase", "danger");
             return "redirect:/ordenes/show";
         }

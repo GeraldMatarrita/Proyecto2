@@ -15,6 +15,13 @@
         </div>
         <form th:object="${newDivision}" th:action="@{/divisiones/create}" method="post">
             <div class="form-group">
+                <label for="id">Código de la división (No se puede repetir)</label>
+                <input autocomplete="off" autofocus th:field="*{id}" id="id"
+                       placeholder="Código de la división" type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('id')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{id}"></div>
+            </div>
+            <div class="form-group">
                 <label for="scientific_name">Nombre (Debe iniciar en mayúscula y finalizar en 'phyta')</label>
                 <input autocomplete="off" autofocus th:field="*{scientific_name}" id="scientific_name"
                        placeholder="Nombre científico de la división" type="text"

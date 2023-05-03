@@ -15,6 +15,13 @@
         </div>
         <form th:object="${newOrden}" th:action="@{/ordenes/create}" method="post">
             <div class="form-group">
+                <label for="id">Código de la orden (No se puede repetir)</label>
+                <input autocomplete="off" autofocus th:field="*{id}" id="id"
+                       placeholder="Código de la orden" type="number"
+                       class="form-control" th:classappend="${#fields.hasErrors('id')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{id}"></div>
+            </div>
+            <div class="form-group">
                 <label for="scientific_name">Nombre (Debe iniciar en mayúscula y terminar en 'ales')</label>
                 <input autocomplete="off" autofocus th:field="*{scientific_name}" id="scientific_name"
                        placeholder="Nombre científico de la orden" type="text"
@@ -45,7 +52,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="collectingMethod">Padre</label>
+                <label for="collectingMethod">Método de colecta</label>
                 <select th:field="*{collecting_method}" aria-label="Selecciona un dueño" autofocus
                         id="collectingMethod">
                     <option value="MANUAL">Manual</option>
