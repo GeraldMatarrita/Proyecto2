@@ -7,7 +7,7 @@ import tec.lenguajes.proyecto2.model.Interfaces.Identificable;
 
 import java.io.Serializable;
 
-//@NoArgsConstructor
+
 
 @Getter
 @Setter
@@ -15,17 +15,16 @@ import java.io.Serializable;
 @Table(name = "institution")
 @PrimaryKeyJoinColumn(name = "owner_id")
 public class Institution extends Owner implements Serializable, Identificable {
+
+    // Sitio web de la institucion
     private String webSite;
 
+    // Constructor vacio
     public Institution() {
         super();
     }
 
-    public Institution(Integer id, String name, String country, String phone, String email, String webSite) {
-        super(name, country, phone, email);
-        this.webSite = webSite;
-    }
-
+    // Getters y setters
     public String getWebSite() {
         return webSite;
     }

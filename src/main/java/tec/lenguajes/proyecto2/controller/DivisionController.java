@@ -12,24 +12,47 @@ import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.DivisionRepository;
 import tec.lenguajes.proyecto2.repository.ReinoRepository;
-
+/*
+    Controlador de la clase Division.
+    Se encarga de manejar las peticiones relacionadas con la clase Division.
+ */
 @Controller
 @RequestMapping(path = "/divisiones")
 public class DivisionController {
 
+    /*
+      Repositorio de Divisiones.
+      Proporciona los métodos para acceder a la base de datos de Divisiones.
+     */
     @Autowired
     private DivisionRepository divisionRepository;
 
+    /*
+      Repositorio de Reinos.
+      Proporciona los métodos para acceder a la base de datos de Reinos.
+     */
     @Autowired
     private ReinoRepository reinoRepository;
 
 
+    /*
+       Método que muestra todas las Divisiones existentes.
+       Parámetros:
+           - model: Modelo utilizado para enviar información a la vista.
+       Retorno: Vista que muestra todas las Divisiones existentes.
+     */
     @RequestMapping(value = "/show")
     public String showDivision(Model model) {
         model.addAttribute("divisiones", divisionRepository.findAll());
         return "/taxones/division/showDivisiones";
     }
 
+    /*
+         Método que muestra el formulario para crear una nueva Division.
+         Parámetros:
+              - model: Modelo utilizado para enviar información a la vista.
+         Retorno: Vista que muestra el formulario para crear una nueva Division.
+     */
     @GetMapping(value = "/create")
     public String createDivision(Model model) {
         model.addAttribute("newDivision", new Division());
@@ -37,34 +60,54 @@ public class DivisionController {
         return "/taxones/division/createDivision";
     }
 
+    /*
+         Método que crea una nueva Division.
+         Parámetros:
+             - division: Division que se desea crear.
+             - bindingResult: Resultado de la validación de la Division.
+             - redirectAttributes: Atributos para redireccionar a la vista.
+         Retorno: Redireccionamiento a la vista de Divisiones.
+     */
     @PostMapping(value = "/create")
     public String createDivision(@ModelAttribute @Valid Division division, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+        // Verifica si hay errores en el formulario.
         if (bindingResult.hasErrors()
                 || division.getAuthor() == null
                 || division.getParent() == null
                 || division.getPublication_year() == null
                 || division.getScientific_name() == null) {
             redirectAttributes
-                    .addFlashAttribute("message", "Error al crear la división")
+                    .addFlashAttribute("mensaje", "Error al crear la división")
                     .addAttribute("division", "danger");
             return "redirect:/divisiones/show";
         }
 
+        // Verifica si el nombre científico cumple con el formato.
         if (!division.suffixVerification(division.getScientific_name()) || !division.initialLetterVerification(division.getScientific_name())) {
             redirectAttributes
-                    .addFlashAttribute("message", "No cumple el formato de nombre científico")
+                    .addFlashAttribute("mensaje", "No cumple el formato de nombre científico")
                     .addAttribute("clase", "danger");
             return "redirect:/divisiones/show";
         }
 
+        // Se guarda la Division en la base de datos.
         divisionRepository.save(division);
+
+        // Se redirecciona a la vista de Divisiones.
         redirectAttributes
-                .addFlashAttribute("message", "Division creada con éxito")
+                .addFlashAttribute("mensaje", "Division creada con éxito")
                 .addAttribute("division", "success");
         return "redirect:/divisiones/show";
     }
 
+    /*
+        Método que muestra el formulario para editar una Division.
+        Parámetros:
+            - model: Modelo utilizado para enviar información a la vista.
+            - id: Id de la Division que se desea editar.
+        Retorno: Vista que muestra el formulario para editar una Division.
+     */
     @GetMapping(value = "/edit/{id}")
     public String editDivision(Model model, @PathVariable Integer id){
         Division divisionAt = divisionRepository.findById(id).orElse(null);
@@ -73,45 +116,64 @@ public class DivisionController {
         return "/taxones/division/editDivision";
     }
 
+    /*
+        Método que edita una Division.
+        Parámetros:
+            - division: Division que se desea editar.
+            - bindingResult: Resultado de la validación de la Division.
+            - redirectAttributes: Atributos para redireccionar a la vista.
+        Retorno: Redireccionamiento a la vista de Divisiones.
+     */
     @PostMapping(value = "/edit/{id}")
     public String editDivision(@ModelAttribute @Valid Division division, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+        // Verifica si hay errores en el formulario.
         if (bindingResult.hasErrors()) {
             redirectAttributes
-                    .addFlashAttribute("message", "Error al editar la imagen")
+                    .addFlashAttribute("mensaje", "Error al editar la imagen")
                     .addAttribute("division", "danger");
             return "redirect:/divisiones/show";
         }
 
+        // Verifica si el nombre científico cumple con el formato.
         if (!division.suffixVerification(division.getScientific_name()) || !division.initialLetterVerification(division.getScientific_name())) {
             redirectAttributes
-                    .addFlashAttribute("message", "No cumple el formato de nombre científico")
+                    .addFlashAttribute("mensaje", "No cumple el formato de nombre científico")
                     .addAttribute("clase", "danger");
             return "redirect:/divisiones/show";
         }
 
+        // Verifica si la Division existe.
         Division posibleDivision = divisionRepository.findFirstById(division.getId()).orElse(null);
-
         if (posibleDivision == null) {
             redirectAttributes
-                    .addFlashAttribute("message", "Error al editar la imagen")
+                    .addFlashAttribute("mensaje", "Error al editar la imagen")
                     .addAttribute("division", "danger");
             return "redirect:/divisiones/show";
         }
 
+        // Se edita la Division en la base de datos.
         divisionRepository.save(division);
 
+        // Se redirecciona a la vista de Divisiones.
         redirectAttributes
-                .addFlashAttribute("message", "Division editada con éxito")
+                .addFlashAttribute("mensaje", "Division editada con éxito")
                 .addAttribute("division", "success");
         return "redirect:/divisiones/show";
     }
 
+    /*
+        Método que eliminar una Division.
+        Parámetros:
+            - model: División que se desea eliminar.
+            - redirectAttributes: Atributos para redireccionar a la vista.
+        Retorno: Redireccionamiento a la vista de Divisiones.
+     */
     @PostMapping(value = "/delete")
     public String deleteDivision(@ModelAttribute Division division, RedirectAttributes redirectAttributes) {
         divisionRepository.delete(division);
         redirectAttributes
-                .addFlashAttribute("message", "Division eliminada con éxito")
+                .addFlashAttribute("mensaje", "Division eliminada con éxito")
                 .addAttribute("division", "success");
         return "redirect:/divisiones/show";
     }

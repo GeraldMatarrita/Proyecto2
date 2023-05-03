@@ -17,19 +17,16 @@ import java.util.List;
 //@NoArgsConstructor
 public class Person extends Owner implements Serializable, Identificable {
 
+    //Apellido de la persona
     private String lastName;
 
+    // Constructor vacio
     public Person() {
         super();
     }
 
+    // Imagenes de autoria de la persona
     @OneToMany(mappedBy = "author")
     private List<Image> images;
-
-
-    public Person(Integer id, String name, String lastName, String country, String phone, String email) {
-        super(name, country, phone, email);
-        this.lastName = lastName;
-    }
 
 }
